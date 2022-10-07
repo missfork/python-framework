@@ -1,0 +1,16 @@
+{
+  "_url": "https://release.ilearningengines.com/login",
+
+   "package":["python","pytest","allure"],
+
+ "credential": {
+  "teacher": {
+   "username": "snape@gmail.com",
+   "password": "Teacher@123"
+  },
+  "student": {
+   "user_name": "ron@gmail.com",
+   "password": "Student@123"
+  }
+ }
+}
