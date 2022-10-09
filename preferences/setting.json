@@ -1,7 +1,7 @@
 {
   "_url": "https://release.ilearningengines.com/login",
 
-   "package":["python","pytest","allure"],
+   "package":["python","pytest","allure-pytest","allure-python-commons"],
 
  "credential": {
   "teacher": {

@@ -12,7 +12,7 @@ class LoginPage(Base):
     def __init__(self, driver):
         super().__init__(driver)
 
-    @allure.step("login into the page from page")
+    #@allure.step("login into the page from page")
     def login(self):
         print("login page start")
         self.element_input('input[placeholder="Email"]', "snape@gmail.com")

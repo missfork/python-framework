@@ -1,5 +1,6 @@
 import configparser
 import time
+import allure
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
@@ -31,6 +32,7 @@ class Base:
             print("outside wait")
         except Exception as e:
             print(f'{e}  element_not_Found"')
+            allure.attach ('screenshot', self.driver.get_screenshot_as_png (), attachment_type=allure.attachment_type.PNG)
 
     def locator(self, css):
         self.wait_method(css)

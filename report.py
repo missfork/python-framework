@@ -38,7 +38,7 @@ search()
 report_arrange()
 file_present.clear()
 search()
-if len(file_present)==0:
+
 
 
 

@@ -1,4 +1,5 @@
 import json
+from lib2to3.pgen2 import driver
 import os
 import sys
 import time
@@ -15,21 +16,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 sys.path.append(f'{os.path.dirname(os.path.abspath("main"))}')
 
 print(os.path.dirname(os.path.abspath('..')))
+driver=None
 
 @pytest.fixture(scope="class")
 def driver_init(request):
     print("hello conftest")
-    file = open(f"{os.path.dirname(os.path.abspath('tester'))}\preferences\setting.jsonp")
+    file = open(f"{os.path.dirname(os.path.abspath('main'))}\preferences\setting.json")
     url = json.load(file)
     file.close()
     options = Options()
     options.page_load_strategy = 'normal'
     driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
     driver.maximize_window()
-
     driver.get(url["_url"])
-
+   
     return driver
-    # request.cls.driver.quit()
-    # yield
-    # base.driver.quit()
+    
+@pytest.fixture(scope="class")
+def last():
+    yield
+    print("finalyreached")
+    driver.quit()
