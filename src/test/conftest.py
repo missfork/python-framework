@@ -1,12 +1,12 @@
 import json
-from lib2to3.pgen2 import driver
+
 import os
 import sys
 import time
+from datetime import datetime
+
+import allure
 import pytest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -16,24 +16,40 @@ from webdriver_manager.chrome import ChromeDriverManager
 sys.path.append(f'{os.path.dirname(os.path.abspath("main"))}')
 
 print(os.path.dirname(os.path.abspath('..')))
-driver=None
 
-@pytest.fixture(scope="class")
+from src.pages.base_page import Base
+
+
+
+
+@pytest.fixture(scope="function")
 def driver_init(request):
-    print("hello conftest")
-    file = open(f"{os.path.dirname(os.path.abspath('main'))}\preferences\setting.json")
+    # global driver
+    # print("--confest start--")
+    print("-----run----")
+    file = open(f"{os.path.dirname(os.path.abspath('report.py'))}/preferences/setting.json")
     url = json.load(file)
     file.close()
     options = Options()
+
     options.page_load_strategy = 'normal'
+   
     driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
     driver.maximize_window()
     driver.get(url["_url"])
-   
-    return driver
-    
-@pytest.fixture(scope="class")
-def last():
-    yield
-    print("finalyreached")
+    request.cls.driver = driver
+    yield driver
+    print("end")
+
+    final_snap(driver)
     driver.quit()
+
+
+def final_snap(driver):
+    date_add = datetime.now()
+    dir_path = os.path.dirname(os.path.realpath("report.py"))
+    dateTimeNow=date_add.strftime("-%d-%m-%Y-%H-%M-%S")
+    name = f"{dir_path}/screen_shot/snap{dateTimeNow}.png"
+    driver.save_screenshot(name)
+    allure.attach.file(name, f'final{dateTimeNow}',
+                       attachment_type=allure.attachment_type.PNG)
