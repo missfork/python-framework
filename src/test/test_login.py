@@ -20,7 +20,7 @@ class Test_Login(Base_Test):
          print("test_login page end")
 
 
-    @pytest.mark.login_2
+    @pytest.mark.login_3
     def test_invalid_user_login(self):
         print("test_login page page")
 
@@ -28,10 +28,11 @@ class Test_Login(Base_Test):
         p.invalid_username_login()
         print("test_login page end")
 
-    @pytest.mark.login_3
+    @pytest.mark.login_2
     def test_invalid_password_login(self):
         print("test_login page page")
 
         p = LoginPage(self.driver)
+
         p.invalid_password_login()
         print("test_login page end")

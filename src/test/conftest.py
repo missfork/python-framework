@@ -20,8 +20,6 @@ print(os.path.dirname(os.path.abspath('..')))
 from src.pages.base_page import Base
 
 
-
-
 @pytest.fixture(scope="function")
 def driver_init(request):
     # global driver
@@ -32,10 +30,22 @@ def driver_init(request):
     file.close()
     options = Options()
 
+    # """Sets chrome options for Selenium.
+    # Chrome options for headless browser is enabled.
+    # """
+
+    # options.add_argument("--headless")
+    # options.add_argument("--no-sandbox")
+    # options.add_argument("--disable-dev-shm-usage")
+    # chrome_prefs = {}
+    # options.experimental_options["prefs"] = chrome_prefs
+    # chrome_prefs["profile.default_content_settings"] = {"images": 2}
+
     options.page_load_strategy = 'normal'
-   
-    driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+    driver = webdriver.Chrome(options=options,service=ChromeService(ChromeDriverManager().install()))
+
     driver.maximize_window()
+
     driver.get(url["_url"])
     request.cls.driver = driver
     yield driver
@@ -48,7 +58,7 @@ def driver_init(request):
 def final_snap(driver):
     date_add = datetime.now()
     dir_path = os.path.dirname(os.path.realpath("report.py"))
-    dateTimeNow=date_add.strftime("-%d-%m-%Y-%H-%M-%S")
+    dateTimeNow = date_add.strftime("-%d-%m-%Y-%H-%M-%S")
     name = f"{dir_path}/screen_shot/snap{dateTimeNow}.png"
     driver.save_screenshot(name)
     allure.attach.file(name, f'final{dateTimeNow}',

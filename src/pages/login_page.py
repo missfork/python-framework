@@ -1,9 +1,4 @@
-import sys
-import os
 import time
-
-import pytest
-import allure
 
 # sys.path.append(f'{os.path.dirname(os.path.abspath("main"))}\\src\\pages')
 from .base_page import Base
@@ -40,6 +35,7 @@ class LoginPage(Base):
         assert self.css('actual_url') == self.driver.current_url
 
     def invalid_password_login(self):
+
         self.element_input(self.css('email'), "snape@gmai.com")
         self.element_input(self.css('password'), 'invalid_password')
         self.click(self.css('login_button'))

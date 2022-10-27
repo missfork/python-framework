@@ -62,6 +62,11 @@ class Base:
         date_add = datetime.now()
         return date_add.strftime("-%d-%m-%Y-%H-%M-%S")
 
+    def get_text(self,css):
+        return self.locator(css).text
+
+
+
     def file_upload(self, css, file_path):
         self.locator(css).send_keys(file_path)
         if self.driver.page_source.find("File Uploaded!"):
